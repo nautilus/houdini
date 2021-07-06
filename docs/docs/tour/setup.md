@@ -10,4 +10,4 @@ title: Getting Started
 
 ### Sapper
 
-### Bare-Svelte Application
+### Single-Page Application
