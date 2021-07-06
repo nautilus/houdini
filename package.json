@@ -4,6 +4,7 @@
 	"description": "The disappearing graphql client for sapper",
 	"workspaces": [
 		"example",
+		"docs",
 		"packages/*"
 	],
 	"type": "module",
