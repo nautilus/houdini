@@ -10,6 +10,6 @@
  */
 
 module.exports = {
-	docs: ['tour/index', 'tour/setup', 'tour/query', 'tour/mutations', 'tour/errors'],
+	docs: ['tour/index', 'tour/setup', 'tour/query', 'tour/mutations'],
 	api: ['api/index'],
 }

@@ -4,7 +4,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
 	title: 'Houdini',
-	tagline: 'Dinosaurs are cool',
+	tagline: 'The disappearing GraphQL client for SvelteKit.',
 	url: 'https://your-docusaurus-test-site.com',
 	baseUrl: '/',
 	onBrokenLinks: 'throw',
