@@ -59,7 +59,7 @@ export function hashDocument(document: string | graphql.DocumentNode): string {
 	const docString = typeof document === 'string' ? document : graphql.print(document)
 
 	// hash the string
-	return crypto.createHash('md5').update(docString).digest('hex')
+	return crypto.createHash('sha256').update(docString).digest('hex')
 }
 
 type GraphQLParentType =

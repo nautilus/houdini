@@ -153,6 +153,10 @@ export default async function artifactGenerator(config: Config, docs: CollectedG
 					AST.objectProperty(AST.identifier('name'), AST.stringLiteral(name)),
 					AST.objectProperty(AST.identifier('kind'), AST.stringLiteral(docKind)),
 					AST.objectProperty(
+						AST.identifier('hash'),
+						AST.stringLiteral(hashDocument(rawString))
+					),
+					AST.objectProperty(
 						AST.identifier('raw'),
 						AST.templateLiteral(
 							[AST.templateElement({ raw: rawString, cooked: rawString }, true)],

@@ -42,6 +42,7 @@ export type SubscriptionHandler = {
 
 export type FetchParams = {
 	text: string
+	hash: string
 	variables: { [key: string]: any }
 }
 
@@ -110,12 +111,13 @@ export async function executeQuery<_Data>(
 	}
 
 	// pull the query text out of the compiled artifact
-	const { raw: text } = artifact
+	const { raw: text, hash } = artifact
 
 	const res = await fetchQuery<_Data>(
 		fetchCtx,
 		{
 			text,
+			hash,
 			variables,
 		},
 		session
@@ -137,9 +139,11 @@ export async function fetchQuery<_Data>(
 	ctx: FetchContext,
 	{
 		text,
+		hash,
 		variables,
 	}: {
 		text: string
+		hash: string
 		variables: { [name: string]: unknown }
 	},
 	session?: FetchSession
@@ -151,7 +155,7 @@ export async function fetchQuery<_Data>(
 		return { data: {}, errors: [{ message: 'could not find houdini environment' }] }
 	}
 
-	return await environment.sendRequest<_Data>(ctx, { text, variables }, session)
+	return await environment.sendRequest<_Data>(ctx, { text, hash, variables }, session)
 }
 
 // convertKitPayload is responsible for taking the result of kit's load

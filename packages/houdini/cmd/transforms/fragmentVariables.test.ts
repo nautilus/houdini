@@ -14,20 +14,20 @@ test('pass argument values to generated fragments', async function () {
 	const docs = [
 		mockCollectedDoc(
 			`
-				query AllUsers {
+                query AllUsers {
                     ...QueryFragment @with(name: "Hello")
-				}
-			`
+                }
+            `
 		),
 		mockCollectedDoc(
 			`
-				fragment QueryFragment on Query 
+                fragment QueryFragment on Query 
                 @arguments(name: {type: "String"} ) {
                     users(stringValue: $name) { 
                         id
                     }
-				}
-			`
+                }
+            `
 		),
 	]
 
@@ -46,58 +46,59 @@ test('pass argument values to generated fragments', async function () {
 	}).program
 	// verify contents
 	expect(parsedQuery).toMatchInlineSnapshot(`
-		module.exports = {
-		    name: "AllUsers",
-		    kind: "HoudiniQuery",
+        module.exports = {
+            name: "AllUsers",
+            kind: "HoudiniQuery",
+            hash: "c346b9eaafaa74d18a267a74706e193e8080b9533d994d6e8489d7e5b534ee41",
 
-		    raw: \`query AllUsers {
-		  ...QueryFragment_10b3uv
-		}
+            raw: \`query AllUsers {
+          ...QueryFragment_10b3uv
+        }
 
-		fragment QueryFragment_10b3uv on Query {
-		  users(stringValue: "Hello") {
-		    id
-		  }
-		}
-		\`,
+        fragment QueryFragment_10b3uv on Query {
+          users(stringValue: "Hello") {
+            id
+          }
+        }
+        \`,
 
-		    rootType: "Query",
+            rootType: "Query",
 
-		    selection: {
-		        "users": {
-		            "type": "User",
-		            "keyRaw": "users(stringValue: \\"Hello\\")",
+            selection: {
+                "users": {
+                    "type": "User",
+                    "keyRaw": "users(stringValue: \\"Hello\\")",
 
-		            "fields": {
-		                "id": {
-		                    "type": "ID",
-		                    "keyRaw": "id"
-		                }
-		            }
-		        }
-		    }
-		};
-	`)
+                    "fields": {
+                        "id": {
+                            "type": "ID",
+                            "keyRaw": "id"
+                        }
+                    }
+                }
+            }
+        };
+    `)
 })
 
 test("fragment arguments with default values don't rename the fragment", async function () {
 	const docs = [
 		mockCollectedDoc(
 			`
-				query AllUsers {
+                query AllUsers {
                     ...QueryFragment
-				}
-			`
+                }
+            `
 		),
 		mockCollectedDoc(
 			`
-				fragment QueryFragment on Query 
+                fragment QueryFragment on Query 
                 @arguments(name: {type: "String", default: "Hello"}) {
                     users(stringValue: $name) { 
                         id
                     }
-				}
-			`
+                }
+            `
 		),
 	]
 
@@ -116,66 +117,67 @@ test("fragment arguments with default values don't rename the fragment", async f
 	}).program
 	// verify contents
 	expect(parsedQuery).toMatchInlineSnapshot(`
-		module.exports = {
-		    name: "AllUsers",
-		    kind: "HoudiniQuery",
+        module.exports = {
+            name: "AllUsers",
+            kind: "HoudiniQuery",
+            hash: "3835ee68277547d738cc8fd5051fe98799b5bd470516146906fa0f134a2b3891",
 
-		    raw: \`query AllUsers {
-		  ...QueryFragment
-		}
+            raw: \`query AllUsers {
+          ...QueryFragment
+        }
 
-		fragment QueryFragment on Query {
-		  users(stringValue: "Hello") {
-		    id
-		  }
-		}
-		\`,
+        fragment QueryFragment on Query {
+          users(stringValue: "Hello") {
+            id
+          }
+        }
+        \`,
 
-		    rootType: "Query",
+            rootType: "Query",
 
-		    selection: {
-		        "users": {
-		            "type": "User",
-		            "keyRaw": "users(stringValue: \\"Hello\\")",
+            selection: {
+                "users": {
+                    "type": "User",
+                    "keyRaw": "users(stringValue: \\"Hello\\")",
 
-		            "fields": {
-		                "id": {
-		                    "type": "ID",
-		                    "keyRaw": "id"
-		                }
-		            }
-		        }
-		    }
-		};
-	`)
+                    "fields": {
+                        "id": {
+                            "type": "ID",
+                            "keyRaw": "id"
+                        }
+                    }
+                }
+            }
+        };
+    `)
 })
 
 test('thread query variables to inner fragments', async function () {
 	const docs = [
 		mockCollectedDoc(
 			`
-				query AllUsers($name: String!) {
+                query AllUsers($name: String!) {
                     ...QueryFragment @with(name: $name)
-				}
-			`
+                }
+            `
 		),
 		mockCollectedDoc(
 			`
-				fragment QueryFragment on Query 
+                fragment QueryFragment on Query 
                 @arguments(name: {type: "String", default: "Hello"}) {
                     ...InnerFragment @with(name: $name)
-				}
-			`
+                }
+            `
 		),
 		mockCollectedDoc(
 			`
-				fragment InnerFragment on Query 
+                fragment InnerFragment on Query 
                 @arguments(name: {type: "String", default: "Hello"}) {
                     users(stringValue: $name) { 
                         id
                     }
-				}
-			`
+                }
+            `
 		),
 	]
 
@@ -194,78 +196,79 @@ test('thread query variables to inner fragments', async function () {
 	}).program
 	// verify contents
 	expect(parsedQuery).toMatchInlineSnapshot(`
-		module.exports = {
-		    name: "AllUsers",
-		    kind: "HoudiniQuery",
+        module.exports = {
+            name: "AllUsers",
+            kind: "HoudiniQuery",
+            hash: "8fa4273ab75455c901e7de893f72a28af4c001afbf204ceca2fd7ab30b7ff372",
 
-		    raw: \`query AllUsers($name: String!) {
-		  ...QueryFragment_VDHGm
-		}
+            raw: \`query AllUsers($name: String!) {
+          ...QueryFragment_VDHGm
+        }
 
-		fragment QueryFragment_VDHGm on Query {
-		  ...InnerFragment_VDHGm
-		}
+        fragment QueryFragment_VDHGm on Query {
+          ...InnerFragment_VDHGm
+        }
 
-		fragment InnerFragment_VDHGm on Query {
-		  users(stringValue: $name) {
-		    id
-		  }
-		}
-		\`,
+        fragment InnerFragment_VDHGm on Query {
+          users(stringValue: $name) {
+            id
+          }
+        }
+        \`,
 
-		    rootType: "Query",
+            rootType: "Query",
 
-		    selection: {
-		        "users": {
-		            "type": "User",
-		            "keyRaw": "users(stringValue: $name)",
+            selection: {
+                "users": {
+                    "type": "User",
+                    "keyRaw": "users(stringValue: $name)",
 
-		            "fields": {
-		                "id": {
-		                    "type": "ID",
-		                    "keyRaw": "id"
-		                }
-		            }
-		        }
-		    },
+                    "fields": {
+                        "id": {
+                            "type": "ID",
+                            "keyRaw": "id"
+                        }
+                    }
+                }
+            },
 
-		    input: {
-		        "fields": {
-		            "name": "String"
-		        },
+            input: {
+                "fields": {
+                    "name": "String"
+                },
 
-		        "types": {}
-		    }
-		};
-	`)
+                "types": {}
+            }
+        };
+    `)
 })
 
 test('inner fragment with intermediate default value', async function () {
 	const docs = [
 		mockCollectedDoc(
 			`
-				query AllUsers {
+                query AllUsers {
                     ...QueryFragment
-				}
-			`
+                }
+            `
 		),
 		mockCollectedDoc(
 			`
-				fragment QueryFragment on Query 
+                fragment QueryFragment on Query 
                 @arguments(name: {type: "String", default: "Hello"}) {
                     ...InnerFragment @with(name: $name)
-				}
-			`
+                }
+            `
 		),
 		mockCollectedDoc(
 			`
-				fragment InnerFragment on Query 
+                fragment InnerFragment on Query 
                 @arguments(name: {type: "String", default: "Goodbye"}, age: {type: "Int", default: 2}) {
                     users(stringValue: $name, intValue: $age) { 
                         id
                     }
-				}
-			`
+                }
+            `
 		),
 	]
 
@@ -284,70 +287,71 @@ test('inner fragment with intermediate default value', async function () {
 	}).program
 	// verify contents
 	expect(parsedQuery).toMatchInlineSnapshot(`
-		module.exports = {
-		    name: "AllUsers",
-		    kind: "HoudiniQuery",
+        module.exports = {
+            name: "AllUsers",
+            kind: "HoudiniQuery",
+            hash: "d5753a3cae56b8133c72527cdccdd0c001effb48104b98806ac62dd9afeeb259",
 
-		    raw: \`query AllUsers {
-		  ...QueryFragment
-		}
+            raw: \`query AllUsers {
+          ...QueryFragment
+        }
 
-		fragment QueryFragment on Query {
-		  ...InnerFragment_10b3uv
-		}
+        fragment QueryFragment on Query {
+          ...InnerFragment_10b3uv
+        }
 
-		fragment InnerFragment_10b3uv on Query {
-		  users(stringValue: "Hello", intValue: 2) {
-		    id
-		  }
-		}
-		\`,
+        fragment InnerFragment_10b3uv on Query {
+          users(stringValue: "Hello", intValue: 2) {
+            id
+          }
+        }
+        \`,
 
-		    rootType: "Query",
+            rootType: "Query",
 
-		    selection: {
-		        "users": {
-		            "type": "User",
-		            "keyRaw": "users(stringValue: \\"Hello\\", intValue: 2)",
+            selection: {
+                "users": {
+                    "type": "User",
+                    "keyRaw": "users(stringValue: \\"Hello\\", intValue: 2)",
 
-		            "fields": {
-		                "id": {
-		                    "type": "ID",
-		                    "keyRaw": "id"
-		                }
-		            }
-		        }
-		    }
-		};
-	`)
+                    "fields": {
+                        "id": {
+                            "type": "ID",
+                            "keyRaw": "id"
+                        }
+                    }
+                }
+            }
+        };
+    `)
 })
 
 test("default values don't overwrite unless explicitly passed", async function () {
 	const docs = [
 		mockCollectedDoc(
 			`
-				query AllUsers {
+                query AllUsers {
                     ...QueryFragment
-				}
-			`
+                }
+            `
 		),
 		mockCollectedDoc(
 			`
-				fragment QueryFragment on Query 
+                fragment QueryFragment on Query 
                 @arguments(name: {type: "String", default: "Hello"}) {
                     ...InnerFragment
-				}
-			`
+                }
+            `
 		),
 		mockCollectedDoc(
 			`
-				fragment InnerFragment on Query 
+                fragment InnerFragment on Query 
                 @arguments(name: {type: "String", default: "Goodbye"}) {
                     users(stringValue: $name) { 
                         id
                     }
-				}
-			`
+                }
+            `
 		),
 	]
 
@@ -366,62 +370,63 @@ test("default values don't overwrite unless explicitly passed", async function (
 	}).program
 	// verify contents
 	expect(parsedQuery).toMatchInlineSnapshot(`
-		module.exports = {
-		    name: "AllUsers",
-		    kind: "HoudiniQuery",
+        module.exports = {
+            name: "AllUsers",
+            kind: "HoudiniQuery",
+            hash: "65064d681cee9e6381a4f63605c9f33f7d6348fc6a7ac010f3f8ea6fabf3c8ee",
 
-		    raw: \`query AllUsers {
-		  ...QueryFragment
-		}
+            raw: \`query AllUsers {
+          ...QueryFragment
+        }
 
-		fragment QueryFragment on Query {
-		  ...InnerFragment
-		}
+        fragment QueryFragment on Query {
+          ...InnerFragment
+        }
 
-		fragment InnerFragment on Query {
-		  users(stringValue: "Goodbye") {
-		    id
-		  }
-		}
-		\`,
+        fragment InnerFragment on Query {
+          users(stringValue: "Goodbye") {
+            id
+          }
+        }
+        \`,
 
-		    rootType: "Query",
+            rootType: "Query",
 
-		    selection: {
-		        "users": {
-		            "type": "User",
-		            "keyRaw": "users(stringValue: \\"Goodbye\\")",
+            selection: {
+                "users": {
+                    "type": "User",
+                    "keyRaw": "users(stringValue: \\"Goodbye\\")",
 
-		            "fields": {
-		                "id": {
-		                    "type": "ID",
-		                    "keyRaw": "id"
-		                }
-		            }
-		        }
-		    }
-		};
-	`)
+                    "fields": {
+                        "id": {
+                            "type": "ID",
+                            "keyRaw": "id"
+                        }
+                    }
+                }
+            }
+        };
+    `)
 })
 
 test('default arguments', async function () {
 	const docs = [
 		mockCollectedDoc(
 			`
-				query AllUsers {
+                query AllUsers {
                     ...QueryFragment
-				}
-			`
+                }
+            `
 		),
 		mockCollectedDoc(
 			`
-				fragment QueryFragment on Query 
+                fragment QueryFragment on Query 
                 @arguments(name: {type: "String", default: "Hello"}, cool: {type: "Boolean", default: true}) {
                     users(boolValue: $cool, stringValue: $name) { 
-						id
-					}
-				}
-			`
+                        id
+                    }
+                }
+            `
 		),
 	]
 
@@ -440,58 +445,59 @@ test('default arguments', async function () {
 	}).program
 	// verify contents
 	expect(parsedQuery).toMatchInlineSnapshot(`
-		module.exports = {
-		    name: "AllUsers",
-		    kind: "HoudiniQuery",
+        module.exports = {
+            name: "AllUsers",
+            kind: "HoudiniQuery",
+            hash: "5c4a8d1fe2e117286ecdfbd273bf1beb2f71a0a3fd9ea6bc84fe97c394c1a836",
 
-		    raw: \`query AllUsers {
-		  ...QueryFragment
-		}
+            raw: \`query AllUsers {
+          ...QueryFragment
+        }
 
-		fragment QueryFragment on Query {
-		  users(boolValue: true, stringValue: "Hello") {
-		    id
-		  }
-		}
-		\`,
+        fragment QueryFragment on Query {
+          users(boolValue: true, stringValue: "Hello") {
+            id
+          }
+        }
+        \`,
 
-		    rootType: "Query",
+            rootType: "Query",
 
-		    selection: {
-		        "users": {
-		            "type": "User",
-		            "keyRaw": "users(boolValue: true, stringValue: \\"Hello\\")",
+            selection: {
+                "users": {
+                    "type": "User",
+                    "keyRaw": "users(boolValue: true, stringValue: \\"Hello\\")",
 
-		            "fields": {
-		                "id": {
-		                    "type": "ID",
-		                    "keyRaw": "id"
-		                }
-		            }
-		        }
-		    }
-		};
-	`)
+                    "fields": {
+                        "id": {
+                            "type": "ID",
+                            "keyRaw": "id"
+                        }
+                    }
+                }
+            }
+        };
+    `)
 })
 
 test('multiple with directives - no overlap', async function () {
 	const docs = [
 		mockCollectedDoc(
 			`
-				query AllUsers {
+                query AllUsers {
                     ...QueryFragment @with(name: "Goodbye") @with(cool: false)
-				}
-			`
+                }
+            `
 		),
 		mockCollectedDoc(
 			`
-				fragment QueryFragment on Query 
+                fragment QueryFragment on Query 
                 @arguments(name: {type: "String", default: "Hello"}, cool: {type: "Boolean", default: true}) {
                     users(boolValue: $cool, stringValue: $name) { 
-						id
-					}
-				}
-			`
+                        id
+                    }
+                }
+            `
 		),
 	]
 
@@ -510,36 +516,37 @@ test('multiple with directives - no overlap', async function () {
 	}).program
 	// verify contents
 	expect(parsedQuery).toMatchInlineSnapshot(`
-		module.exports = {
-		    name: "AllUsers",
-		    kind: "HoudiniQuery",
+        module.exports = {
+            name: "AllUsers",
+            kind: "HoudiniQuery",
+            hash: "7327e6f7f6c8339feebb640b995c3e25efe1b25de29b1f43cb55c2a0566f713f",
 
-		    raw: \`query AllUsers {
-		  ...QueryFragment_2prn0K
-		}
+            raw: \`query AllUsers {
+          ...QueryFragment_2prn0K
+        }
 
-		fragment QueryFragment_2prn0K on Query {
-		  users(boolValue: false, stringValue: "Goodbye") {
-		    id
-		  }
-		}
-		\`,
+        fragment QueryFragment_2prn0K on Query {
+          users(boolValue: false, stringValue: "Goodbye") {
+            id
+          }
+        }
+        \`,
 
-		    rootType: "Query",
+            rootType: "Query",
 
-		    selection: {
-		        "users": {
-		            "type": "User",
-		            "keyRaw": "users(boolValue: false, stringValue: \\"Goodbye\\")",
+            selection: {
+                "users": {
+                    "type": "User",
+                    "keyRaw": "users(boolValue: false, stringValue: \\"Goodbye\\")",
 
-		            "fields": {
-		                "id": {
-		                    "type": "ID",
-		                    "keyRaw": "id"
-		                }
-		            }
-		        }
-		    }
-		};
-	`)
+                    "fields": {
+                        "id": {
+                            "type": "ID",
+                            "keyRaw": "id"
+                        }
+                    }
+                }
+            }
+        };
+    `)
 })
